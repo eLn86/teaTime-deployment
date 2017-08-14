@@ -30,12 +30,12 @@ require('dotenv').config({silent: true});
 const app = express();
 const debug = Debug('backend:app');
 
-const option = {
-  key: fs.readFileSync('./teatime-key.pem'),
-  cert: fs.readFileSync('./teatime-cert.pem')
-}
+// const option = {
+//   key: fs.readFileSync('./teatime-key.pem'),
+//   cert: fs.readFileSync('./teatime-cert.pem')
+// }
 
-const server = require('https').Server(option, app);
+const server = require('http').Server(app);
 const io = require('socket.io')(server);
 
 
@@ -52,7 +52,7 @@ mongoose.connection.on('error', (err) => {
 });
 
 // Port setup
-app.set('port', process.env.PORT || 3001);
+app.set('port', process.env.PORT || 443);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
