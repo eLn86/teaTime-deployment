@@ -1,7 +1,7 @@
 // Import Middleware and dependencies
 import fs from 'fs';
 import express from 'express';
-import Debug from 'debug';
+// import Debug from 'debug';
 import path from 'path';
 import mongoose from 'mongoose';
 import passport from 'passport';
@@ -28,14 +28,14 @@ require('dotenv').config({silent: true});
  *  Create Express, Socket.io server.
  */
 const app = express();
-const debug = Debug('backend:app');
+// const debug = Debug('backend:app');
 
-// const option = {
-//   key: fs.readFileSync('./teatime-key.pem'),
-//   cert: fs.readFileSync('./teatime-cert.pem')
-// }
+const option = {
+  key: fs.readFileSync('./teatime-key.pem'),
+  cert: fs.readFileSync('./teatime-cert.pem')
+}
 
-const server = require('http').Server(app);
+const server = require('https').Server(app);
 const io = require('socket.io')(server);
 
 
@@ -170,7 +170,7 @@ app.use((err, req, res, next) => {
 
 // Handle uncaughtException
 process.on('uncaughtException', (err) => {
-  debug('Caught exception: %j', err);
+  // debug('Caught exception: %j', err);
   process.exit(1);
 });
 
