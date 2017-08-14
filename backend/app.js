@@ -1,4 +1,5 @@
 // Import Middleware and dependencies
+import fs from 'fs';
 import express from 'express';
 import Debug from 'debug';
 import path from 'path';
@@ -29,8 +30,15 @@ require('dotenv').config({silent: true});
 const app = express();
 const debug = Debug('backend:app');
 
-const server = require('http').Server(app);
+const option = {
+  key: fs.readFileSync('./teatime-key.pem'),
+  cert: fs.readFileSync('./teatime-cert.pem')
+}
+
+const server = require('https').Server(option, app);
 const io = require('socket.io')(server);
+
+
 
 /**
  *  Mongoose Connection.
